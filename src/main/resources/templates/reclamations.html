@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Réclamations</title>
+    <!-- CSS séparé -->
+    <link rel="stylesheet" th:href="@{/css/reclamations.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Liste des Réclamations</h2>
+
+    <table id="reclamationTable">
+
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Quartier</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- Rempli par JS -->
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- JS dans même fichier -->
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        loadReclamations();
+
+    });
+
+    /* 🔵 Charger toutes les réclamations */
+    function loadReclamations() {
+
+        fetch("/reclamation")
+            .then(response => response.json())
+            .then(data => {
+
+                const tbody =
+                    document.querySelector("#reclamationTable tbody");
+
+                tbody.innerHTML = "";
+
+                data.forEach(r => {
+                    const row = `
+                    <tr>
+
+                        <td>${r.titre}</td>
+                        <td>${r.description}</td>
+                        <td>${r.adressequartier}</td>
+                        <td>${formatDate(r.datedesoumission)}</td>
+
+                        <td>
+                            <select id="statut-${r.id}">
+                                <option value="En Attente"
+                                    ${r.statut === "En Attente" ? "selected" : ""}>
+                                    En Attente
+                                </option>
+
+                                <option value="En Cours"
+                                    ${r.statut === "En Cours" ? "selected" : ""}>
+                                    En Cours
+                                </option>
+
+                                <option value="Terminée"
+                                    ${r.statut === "Terminée" ? "selected" : ""}>
+                                    Terminée
+                                </option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <button onclick="updateStatut(${r.id})">
+                                Modifier
+                            </button>
+                        </td>
+
+                    </tr>
+                `;
+                    tbody.innerHTML += row;
+                });
+            });
+    }
+
+    /* 🔵 Modifier statut */
+    function updateStatut(id) {
+
+        const statut =
+            document.getElementById("statut-" + id).value;
+
+        const data = {
+            id: id,
+            statut: statut
+        };
+
+        fetch("/reclamationupdate", {
+
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+
+        })
+            .then(response => {
+
+                if (response.ok) {
+
+                    alert("Statut modifié ✅");
+                    loadReclamations();
+
+                } else {
+
+                    alert("Erreur modification ❌");
+
+                }
+
+            });
+
+    }
+
+    /* 🔵 Format date */
+    function formatDate(date) {
+
+        if (!date) return "";
+
+        return new Date(date)
+            .toLocaleString("fr-FR");
+
+    }
+
+</script>
+
+</body>
+</html>

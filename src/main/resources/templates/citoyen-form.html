@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer Citoyen</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Portail des Citoyens</h2>
+
+    <form th:action="@{/citoyen/save}" th:object="${citoyen}" method="post" class="form-citoyen">
+        <div class="form-group">
+            <label>N° CIN / Passeport</label>
+            <input type="text" th:field="*{idAdministratif}" placeholder="Ex: KJ123456" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Nom :</label>
+            <input type="text" th:field="*{nom}" placeholder="Nom" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Prénom :</label>
+            <input type="text" th:field="*{prenom}" placeholder="Prénom" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Email :</label>
+            <input type="email" th:field="*{email}" placeholder="email@example.com" required/>
+        </div>
+
+        <button type="submit" class="btn-submit">Valider</button>
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.querySelector(".form-citoyen");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Empêche l'envoi classique Thymeleaf
+
+            // Récupération des valeurs des champs
+            const data = {
+                idAdministratif: document.querySelector('[name="idAdministratif"]').value,
+                nom: document.querySelector('[name="nom"]').value,
+                prenom: document.querySelector('[name="prenom"]').value,
+                email: document.querySelector('[name="email"]').value
+            };
+            // Envoi vers API REST
+            fetch("/citoyen", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(citoyen => {
+
+                    alert("Citoyen enregistré avec succès !");
+
+                    // 🔴 REDIRECTION vers formulaire réclamation
+                    window.location.href =
+                        "/formreclamation?citoyenId=" + citoyen.id;
+
+                })
+                .catch(error => {
+                    console.error("Erreur :", error);
+                    alert("Erreur serveur !");
+                });
+        });
+
+    });
+</script>
+</body>
+</html>

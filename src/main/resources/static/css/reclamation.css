@@ -1,0 +1,187 @@
+/* Reset simple */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+    padding: 20px ;
+}
+
+/* Container */
+.container {
+    background: white;
+    padding: 30px;
+    width: 730px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Titre */
+.container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Groupe */
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Inputs + textarea */
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* Focus */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #6c63ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(108,99,255,0.5);
+}
+
+/* Bouton */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover */
+.btn-submit:hover {
+    background: #574fd6;
+}
+
+/* 🔽 Container table */
+.table-container {
+    margin-top: 40px;
+}
+
+/* Titre table */
+.table-container h3 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+/* Table */
+.reclamation-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header */
+.reclamation-table thead {
+    background: #6c63ff;
+    color: white;
+}
+
+.reclamation-table th {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Body cells */
+.reclamation-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Zebra effect */
+.reclamation-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Hover */
+.reclamation-table tbody tr:hover {
+    background: #eef0ff;
+    transition: 0.3s;
+}
+
+/* Statut badges (optionnel) */
+/*.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status.en-attente {
+    background: #ffe082;
+    color: #8a6d00;
+}
+
+.status.traitee {
+    background: #81c784;
+    color: #1b5e20;
+}*/
+/* STYLE GLOBAL STATUT */
+.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;      /* on garde la même taille */
+    font-weight: bold;
+    display: inline-block;
+    text-transform: capitalize;
+    border: 1px solid transparent;
+}
+
+/* EN ATTENTE */
+.status.en-attente {
+    background-color: #fff3cd;   /* jaune clair officiel */
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+/* EN COURS */
+.status.en-cours {
+    background-color: #cce5ff;   /* bleu administratif */
+    color: #004085;
+    border-color: #b8daff;
+}
+
+/* TERMINÉE */
+.status.terminée {
+    background-color: #d4edda;   /* vert validation */
+    color: #155724;
+    border-color: #c3e6cb;
+}
